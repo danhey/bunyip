@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import division, print_function
-
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.optimize import newton
 from scipy.signal import find_peaks
+import warnings
 
 __all__ = ['solve_geometry', 'from_geometry']
 
@@ -37,11 +36,19 @@ def solve_geometry(phase, flux, period, t0=None,
     depth_primary = flux[(np.abs(phase - t0_primary)).argmin()]
     depth_secondary = flux[(np.abs(phase - t0_secondary)).argmin()]
     
+    primary_duration = (primary[1] - primary[0])
+    secondary_duration = (secondary[1] - secondary[0])
+    
+    if (primary_duration > 0.2) or (secondary_duration > 0.2):
+        warnings.warn('Can not identify eclipse times, setting to 0')
+        t0_primary = t0
+        t0_secondary = 0.5
+        
     if diagnose:
         plt.plot(phase, (flux-flux.min()) / (flux-flux.min()).max(), linewidth=0.7,
                 label='Light curve')
-        # plt.plot(phase, (grad2 - grad2.min()) / (grad2 - grad2.min()).max(), linewidth=0.7,
-        #         label='Second derivative')
+        plt.plot(phase, (grad2 - grad2.min()) / (grad2 - grad2.min()).max(), linewidth=0.7,
+                label='Second derivative')
         plt.legend()
         for pri in primary:
             plt.axvline(pri, c='red', linestyle='dashed', linewidth=0.5)
@@ -51,8 +58,8 @@ def solve_geometry(phase, flux, period, t0=None,
     return {
         'primary_phases': primary,
         'secondary_phases': secondary,
-        'primary_duration': (primary[1] - primary[0]) * period,
-        'secondary_duration': (secondary[1] - secondary[0]) * period,
+        'primary_duration': primary_duration * period,
+        'secondary_duration': secondary_duration * period,
         't0_primary': t0_primary,
         't0_secondary': t0_secondary,
         'primary_depth': depth_primary,
