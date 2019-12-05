@@ -102,3 +102,17 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+phoetting/
+
+db_merged.pickle
+
+lcs/ellc_traces/
+
+archive/
+
+bunyip/knn/knnpickle_file
+
+bunyip/database/
+
+bunyip/network/RELU_2000_2000_lr=1e-05_norm_insert2000layer-1571628331/

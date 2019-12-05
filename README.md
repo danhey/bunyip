@@ -1,2 +1,1 @@
-# Bunyip
-Fitting eclipsing binaries
+Varda
