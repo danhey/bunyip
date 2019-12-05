@@ -1,0 +1,7 @@
+matplotlib>=1.5.3
+tqdm
+phoebe
+emcee>=3.
+ellc
+dynesty
+scipy
