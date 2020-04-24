@@ -14,15 +14,14 @@ import tqdm
 __all__ = ["Bunyip"]
 
 class Bunyip:
-    def __init__(self, phase, flux, flux_err=None,
-                shape_1='roche', shape_2='roche', period=None):
+    def __init__(self, phase, flux, flux_err=None):
+
         # Assign initial values
         self.phase = phase
         self.flux = flux / np.median(flux)
         if flux_err is None:
             flux_err = np.zeros_like(flux)
         self.flux_err = flux_err
-        self.period = period
 
         # Initialise fit parameters
         self.parameters = {
@@ -93,8 +92,7 @@ class Bunyip:
             phase_flux_err = np.zeros_like(phase)
 
         # Bunyip needs args
-        return Bunyip(phase, phase_flux, phase_flux_err,
-                        period=period)
+        return Bunyip(phase, phase_flux, phase_flux_err)
 
     def lc_model(self):
         rsum = self.parameters['rsum']
@@ -104,7 +102,6 @@ class Bunyip:
         lc = ellc.lc(self.phase,
                      t_zero=self.parameters['t0'],
                      q=self.parameters['q'],
-                     period=1., # Period is always 1 since we fit in phase space
                      radius_1=r1, 
                      radius_2=r2,
                      incl=self.parameters['incl'],
