@@ -19,9 +19,6 @@ class Phoetter(phoebe.Bundle):
         
         # Flip constraints and do speedups
         self.__init_bundle()
-        
-        # Current fit parameters
-        self.fit_parameters = {}
     
     def __init_bundle(self):
         # Speedups
@@ -31,13 +28,13 @@ class Phoetter(phoebe.Bundle):
         # self.get_parameter(context='compute', component='secondary', qualifier='ntriangles').set_value(300)
 
         # Add some fitting constraints
-        self.add_constraint('requivratio')
-        self.add_constraint('requivsum')
+        # self.add_constraint('requivratio')
+        # self.add_constraint('requivsum')
         self.add_constraint('teffratio')
 
         # And flip them
-        self.flip_constraint('requivratio', solve_for='requiv@primary')
-        self.flip_constraint('requivsum', solve_for='requiv@secondary')
+        # self.flip_constraint('requivratio', solve_for='requiv@primary')
+        # self.flip_constraint('requivsum', solve_for='requiv@secondary')
         self.flip_constraint('teffratio', solve_for='teff@secondary@component')
         self.flip_constraint('esinw', solve_for='ecc')
         self.flip_constraint('ecosw', solve_for='per0')

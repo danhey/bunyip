@@ -3,5 +3,5 @@ tqdm
 phoebe
 emcee>=3.
 ellc
-dynesty
+sklearn
 scipy
